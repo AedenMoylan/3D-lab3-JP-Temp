@@ -2,13 +2,13 @@
 using System.Collections;
 using TMPro;
 using UnityEngine.InputSystem;
-
+using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
-    public GameObject hazard;
+   // public GameObject hazard;
     public GameObject enemy;
     public Vector3 spawnValues;
-    public int hazardCount;
+   // public int hazardCount;
     public int enemyCount;
     public float spawnWait;
     public float startWait;
@@ -19,21 +19,23 @@ public class GameController : MonoBehaviour
     public TMP_Text livesText;
     public TMP_Text restartText;
     public TMP_Text gameOverText;
-
-    private bool gameOver;
+    Vector2 maxPos;
+    Vector2 minPos;
+    
     private bool restart;
     private int score;
 
     void Start()
     {
         GetComponent<AudioSource>().Play();
-        gameOver = false;
+        minPos = Camera.main.ScreenToWorldPoint(Vector3.zero);
+        maxPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
         restart = false;
         restartText.text = "";
         gameOverText.text = "";
         livesText.text = "lives bruh";
         score = 0;
-        playerLives = 3;
+       
         UpdateScore();
         UpdateLives();
         StartCoroutine(SpawnWaves());
@@ -41,15 +43,24 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+        
         if (restart)
         {
             if (Keyboard.current.rKey.wasPressedThisFrame)
             {
-                Application.LoadLevel(Application.loadedLevel);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
             }
         }
-
+        if(enemy.transform.position.z <= -1)
+        {
+            enemy.transform.position = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+        }
         if (playerLives <= 0)
+        {
+            GameOver();
+        }
+        else if (score>=10)
         {
             GameOver();
         }
@@ -57,25 +68,7 @@ public class GameController : MonoBehaviour
 
     IEnumerator SpawnWaves()
     {
-        //yield return new WaitForSeconds(startWait);
-        //while (true)
-        //{
-        //    for (int i = 0; i < hazardCount; i++)
-        //    {
-        //        Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-        //        Quaternion spawnRotation = Quaternion.identity;
-        //        Instantiate(hazard, spawnPosition, spawnRotation);
-        //        yield return new WaitForSeconds(spawnWait);
-        //    }
-        //    yield return new WaitForSeconds(waveWait);
-
-        //    if (gameOver)
-        //    {
-        //        restartText.text = "Press 'R' for Restart";
-        //        restart = true;
-        //        break;
-        //    }
-        //}
+      
         yield return new WaitForSeconds(startWait);
         while (true)
         {
@@ -109,7 +102,8 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         gameOverText.text = "Game Over!";
-        gameOver = true;
+        restart = true;
+       
     }
     public void loseLives(int newLiveValue)
     {
