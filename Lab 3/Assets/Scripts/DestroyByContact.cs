@@ -62,12 +62,10 @@ public class DestroyByContact : MonoBehaviour
         // am adding the power up to the player if this is true
         if (other.tag == "powerUp")
         {
-            //gameController.loseLives(livesValue);
+            
             Destroy(other.gameObject);
-
-            //Instantiate(explosion, transform.position, transform.rotation);
-
-            //gameController.GameOver();
+            Debug.Log("power up ");
+            
         }
 
     }

@@ -1250,6 +1250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 100002, guid: afc18fc39ade3744397c0c993b57be53, type: 3}
+  powerUp: {fileID: 2081455405694767209, guid: e316ff1f1fa63f644ad8ac612163aff3, type: 3}
   spawnValues: {x: 8, y: 0, z: 16}
   enemyCount: 5
   spawnWait: 0
@@ -1823,6 +1824,7 @@ MonoBehaviour:
     xMax: 6
     zMin: -4
     zMax: 8
+  powerUP: {fileID: 0}
   shot: {fileID: 100000, guid: f4ec271e525e14ca9927a07e6a2e153d, type: 3}
   shotSpawn: {fileID: 1287705513}
   fireRate: 0.25

@@ -65,11 +65,11 @@ public class GameController : MonoBehaviour
         {
             GameOver();
         }
-<<<<<<< HEAD
+
         // if score is greater than number of enemies i.e they are dead all of them
         // move into the next scene with scene manager
         ///
-=======
+
         if(score==3)
         {
             
@@ -78,7 +78,7 @@ public class GameController : MonoBehaviour
            
            
         }
->>>>>>> powerUp
+
     }
 
     IEnumerator SpawnWaves()
