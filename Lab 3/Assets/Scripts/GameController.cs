@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 {
    // public GameObject hazard;
     public GameObject enemy;
+    public GameObject powerUp;
     public Vector3 spawnValues;
    // public int hazardCount;
     public int enemyCount;
@@ -64,6 +65,14 @@ public class GameController : MonoBehaviour
         {
             GameOver();
         }
+        if(score==3)
+        {
+            
+               StartCoroutine( spawnPowerUp());
+            
+           
+           
+        }
     }
 
     IEnumerator SpawnWaves()
@@ -82,6 +91,23 @@ public class GameController : MonoBehaviour
             break;
         }
     }
+    IEnumerator spawnPowerUp()
+    {
+
+        while (true)
+        {
+           
+               // Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+             //   Quaternion spawnRotation = Quaternion.identity;
+                Instantiate(powerUp);
+               yield return new WaitForSeconds(spawnWait);
+            
+            break;
+        }
+
+    }
+
+    
 
     public void AddScore(int newScoreValue)
     {

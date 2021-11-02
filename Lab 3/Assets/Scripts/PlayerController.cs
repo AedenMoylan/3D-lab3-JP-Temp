@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 	public float speed;
 	public float tilt;
 	public Boundary boundary;
-
+	public GameObject powerUP;
 	public GameObject shot;
 	public Transform shotSpawn;
 	public float fireRate;
@@ -53,8 +53,9 @@ public class PlayerController : MonoBehaviour
 
 		
 	}
+    
 
-	void OnFire(InputValue movementValue)
+    void OnFire(InputValue movementValue)
     {
 		nextFire = Time.time + fireRate;
 		Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
