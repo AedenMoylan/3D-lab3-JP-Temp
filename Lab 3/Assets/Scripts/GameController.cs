@@ -80,10 +80,18 @@ public class GameController : MonoBehaviour
 
            
         }
+
        
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Debug.Log("power Up Hit Player");
+        }
+    }
 
-    IEnumerator upgradeShip()
+        IEnumerator upgradeShip()
     {
         yield return new WaitForSeconds(2);
         attemptToUpgrade = true;

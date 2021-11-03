@@ -59,14 +59,7 @@ public class DestroyByContact : MonoBehaviour
             }
             
         }
-        // am adding the power up to the player if this is true
-        if (other.tag == "powerUp")
-        {
-            
-            Destroy(other.gameObject);
-            Debug.Log("hit power up ");
-            
-        }
+     
 
     }
 }
