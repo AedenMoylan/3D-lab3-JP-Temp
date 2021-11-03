@@ -64,7 +64,7 @@ public class DestroyByContact : MonoBehaviour
         {
             
             Destroy(other.gameObject);
-            Debug.Log("power up ");
+            Debug.Log("hit power up ");
             
         }
 

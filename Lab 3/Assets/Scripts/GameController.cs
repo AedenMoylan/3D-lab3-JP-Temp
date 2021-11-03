@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
    // public GameObject hazard;
     public GameObject enemy;
     public GameObject powerUp;
+    public GameObject asteroid;
     public Vector3 spawnValues;
    // public int hazardCount;
     public int enemyCount;
@@ -22,7 +23,8 @@ public class GameController : MonoBehaviour
     public TMP_Text gameOverText;
     Vector2 maxPos;
     Vector2 minPos;
-    
+    bool attemptToUpgrade = false;
+   
     private bool restart;
     private int score;
 
@@ -72,15 +74,27 @@ public class GameController : MonoBehaviour
 
         if(score==3)
         {
-            
-               StartCoroutine( spawnPowerUp());
-            
+            score++;
            
+            StartCoroutine(upgradeShip());
+
            
         }
-
+       
     }
 
+    IEnumerator upgradeShip()
+    {
+        yield return new WaitForSeconds(2);
+        attemptToUpgrade = true;
+        if(attemptToUpgrade == true)
+        {
+        Instantiate(powerUp);
+        attemptToUpgrade = false;
+        }
+        
+
+    }
     IEnumerator SpawnWaves()
     {
       
@@ -91,26 +105,21 @@ public class GameController : MonoBehaviour
             {
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
+
                 Instantiate(enemy, spawnPosition, spawnRotation);
+                
+                    
+                  spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+                  spawnRotation = Quaternion.identity;
+                  Instantiate(asteroid, spawnPosition, spawnRotation);
+                    
+                
+                
                 yield return new WaitForSeconds(spawnWait);
             }
-            break;
-        }
-    }
-    IEnumerator spawnPowerUp()
-    {
-
-        while (true)
-        {
            
-               // Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-             //   Quaternion spawnRotation = Quaternion.identity;
-                Instantiate(powerUp);
-               yield return new WaitForSeconds(spawnWait);
-            
             break;
         }
-
     }
 
     

@@ -20,5 +20,6 @@ public class powerUpScript : MonoBehaviour
     {
         transform.position += movement * speed;
         rb.rotation = Quaternion.Euler(0.0f, .0f, 2.0f);
+        Debug.Log(transform.position.y);
     }
 }
