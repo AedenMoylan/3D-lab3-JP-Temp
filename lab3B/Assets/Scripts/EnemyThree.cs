@@ -4,49 +4,86 @@ using UnityEngine;
 
 public class EnemyThree : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float radius = 2f;
+    private Rigidbody rb;
+    public float speed = 0;
+    private int randomDirection = 1;
+    public float timeRemaining;
 
-    public bool offsetIsCenter = true;
-    public Vector3 offset;
-    Vector3 movement;
-    float verticalSpeed = 0.5f;
-    float angularSpeed = 0.9f;
-    float timeCounter = 0;
-    float circleRad = 3.4f;
-    Vector3 center;
-    float z;
-    float y;
-    float x;
+    private PlayerController playerController;
 
-    private void Awake()
-    {
-        center = transform.position;
-    }
+   
+
+ 
+
+    // Start is called before the first frame update
     void Start()
     {
+        
+        transform.Rotate(new Vector3(0, 180, 0));
         rb = GetComponent<Rigidbody>();
-
-        movement = new Vector3(0.0f, 0.0f, -1.0f);
-        rb.velocity = movement;
-
-
+      
     }
 
+    // Update is called once per frame
     void Update()
     {
-        timeCounter += angularSpeed * Time.deltaTime;
-        z = Mathf.Cos(timeCounter) * circleRad;
-        x = Mathf.Sin(timeCounter) * circleRad;
-        y = 0;
 
-        transform.position = center + new Vector3(x, y, z);
-        center -= new Vector3(0, 0, verticalSpeed * Time.deltaTime);
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
 
+        if (timeRemaining <= 0)
+        {
+            randomDirection = Random.Range(1, 5);
+            timeRemaining = 0.5f;
+        }
 
-
-
-
+       
 
     }
+
+    private void FixedUpdate()
+    {
+
+        if (randomDirection == 1)
+        {
+            rb.velocity = new Vector3(0, 0, transform.forward.z * -speed);
+        }
+        else if (randomDirection == 2)
+        {
+            rb.velocity = new Vector3(0, 0, transform.forward.z * speed);
+
+        }
+        else if (randomDirection == 3)
+        {
+            rb.velocity = new Vector3(transform.right.x * speed, 0, 0);
+
+        }
+        else if (randomDirection == 4)
+        {
+            rb.velocity = new Vector3(transform.right.x * -speed, 0, 0);
+
+        }
+
+        if (transform.position.z > 12)
+        {
+            randomDirection = 1;
+        }
+        if (transform.position.z < -3.5)
+        {
+            randomDirection = 2;
+        }
+        if (transform.position.x < -6.5)
+        {
+            randomDirection = 3;
+        }
+        if (transform.position.x > 6.5)
+        {
+            randomDirection = 4;
+        }
+
+    }
+
+   
 }
