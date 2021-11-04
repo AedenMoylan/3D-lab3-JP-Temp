@@ -15,12 +15,15 @@ public class GameController : MonoBehaviour
     public float spawnWait;
     public float startWait;
     public float waveWait;
-    public int playerLives;
+    
 
     public TMP_Text scoreText;
     public TMP_Text livesText;
     public TMP_Text restartText;
     public TMP_Text gameOverText;
+    public TMP_Text HPText;
+
+    
     Vector2 maxPos;
     Vector2 minPos;
     bool attemptToUpgrade = false;
@@ -28,8 +31,11 @@ public class GameController : MonoBehaviour
     private bool restart;
     private int score;
 
+    private PlayerController player;
+
     void Start()
     {
+        
         GetComponent<AudioSource>().Play();
         minPos = Camera.main.ScreenToWorldPoint(Vector3.zero);
         maxPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
@@ -37,10 +43,15 @@ public class GameController : MonoBehaviour
         restartText.text = "";
         gameOverText.text = "";
         livesText.text = "lives bruh";
+       // HPText.text = "";
         score = 0;
-       
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        player = playerObject.GetComponent<PlayerController>();
+
         UpdateScore();
         UpdateLives();
+        UpdatePlayerHPText();
         StartCoroutine(SpawnWaves());
     }
 
@@ -59,10 +70,7 @@ public class GameController : MonoBehaviour
         {
             enemy.transform.position = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
         }
-        if (playerLives <= 0)
-        {
-            GameOver();
-        }
+
         else if (score>=10)
         {
             GameOver();
@@ -143,20 +151,38 @@ public class GameController : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
+    public void loseHP()
+    {
+        player.reduceHP();
+        UpdatePlayerHPText();
+    }
+
+    void UpdatePlayerHPText()
+    {
+        HPText.text = "HP: " + player.getHP();
+    }
     void UpdateLives()
     {
-        livesText.text = "Lives: " + playerLives;
+        livesText.text = "Lives: " + player.playerLives;
     }
 
     public void GameOver()
     {
         gameOverText.text = "Game Over!";
-        restart = true;
-       
+        restart = true;   
     }
     public void loseLives(int newLiveValue)
     {
-        playerLives += newLiveValue;
+        player.playerLives += newLiveValue;
         UpdateLives();
     }
+
+    public void resetHP()
+    {
+        player.returnHPToBase();
+        UpdatePlayerHPText();
+
+    }
+
+    
 }

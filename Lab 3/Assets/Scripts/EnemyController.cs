@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public int HP;
     void Start()
     {
         
@@ -14,6 +15,16 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void reduceHP()
+    {
+        HP--;
+    }
+
+    public int getHP()
+    {
+        return HP;
     }
 
 

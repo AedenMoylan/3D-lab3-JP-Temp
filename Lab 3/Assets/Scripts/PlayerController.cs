@@ -22,15 +22,31 @@ public class PlayerController : MonoBehaviour
 	public float fireRate;
 	 
 	private float nextFire;
+	public int HP;
+	int count = 0;
+	public Renderer rend;
+	bool isPlayerVisible;
+	public bool isLifeLost;
+	int timerCount;
+	public int playerLives;
 
 	void Start()
     {
+		timerCount = 0;
+		isPlayerVisible = true;
+		isLifeLost = false;
 		rb = GetComponent<Rigidbody>();
-    }
+		rend = GetComponent<Renderer>();
+
+		rend.enabled = isPlayerVisible;
+	}
 	
 	void Update()
 	{
-
+		if (isLifeLost == true)
+		{
+			flashPlayer();
+		}
 	}
 
 	void FixedUpdate()
@@ -61,4 +77,48 @@ public class PlayerController : MonoBehaviour
 		Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 		GetComponent<AudioSource>().Play();
 	}
+
+	public void reduceHP()
+    {
+		HP--;
+    }
+
+	public int getHP()
+    {
+		return HP;
+    }
+
+	public void returnHPToBase()
+    {
+		HP = 2;
+    }
+
+	public void flashPlayer()
+    {
+		count++;
+		timerCount++;
+
+		if (count >= 25 && isPlayerVisible == true)
+		{
+			isPlayerVisible = false;
+			rend.enabled = isPlayerVisible;
+			count = 0;
+		}
+		if (count >= 25 && isPlayerVisible == false)
+		{
+			isPlayerVisible = true;
+			rend.enabled = isPlayerVisible;
+			count = 0;
+		}
+		if (timerCount >= 200)
+        {
+			isLifeLost = false;
+			timerCount = 0;
+        }
+	}
+
+	public int getLives()
+    {
+		return playerLives;
+    }
 }
