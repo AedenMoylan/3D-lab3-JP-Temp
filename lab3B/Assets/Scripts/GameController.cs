@@ -5,30 +5,36 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
-   // public GameObject hazard;
+    // GaneObject definitions
     public GameObject enemy;
     public GameObject powerUp;
     public GameObject asteroid;
     public GameObject Boss;
+
+    // used to randomly respawn enemy
     public Vector3 spawnValues;
-   // public int hazardCount;
+
+
     public int enemyCount;
     public float spawnWait;
     public float startWait;
-    public float waveWait;
-    
 
+    // textMestPro definitions
     public TMP_Text scoreText;
     public TMP_Text livesText;
     public TMP_Text restartText;
     public TMP_Text gameOverText;
     public TMP_Text HPText;
 
-    
+    // used for the border
     Vector2 maxPos;
     Vector2 minPos;
+
+    // used to spawn powerUp and Enemy3
     bool attemptToUpgrade = false;
     bool spawnEnemyThree = false;
+
+
     private bool restart;
     private int score;
 
@@ -36,20 +42,22 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        
+        // play music
         GetComponent<AudioSource>().Play();
+        // used for the border
         minPos = Camera.main.ScreenToWorldPoint(Vector3.zero);
         maxPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
+
         restart = false;
         restartText.text = "";
         gameOverText.text = "";
-        livesText.text = "lives bruh";
-       // HPText.text = "";
+        livesText.text = "";
         score = 0;
 
         GameObject playerObject = GameObject.FindWithTag("Player");
         player = playerObject.GetComponent<PlayerController>();
 
+        // sets text and spawns the first wave
         UpdateScore();
         UpdateLives();
         UpdatePlayerHPText();
@@ -58,7 +66,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        
+        // used to restart the game
         if (restart)
         {
             if (Keyboard.current.rKey.wasPressedThisFrame)
@@ -67,26 +75,20 @@ public class GameController : MonoBehaviour
 
             }
         }
-        if(enemy.transform.position.z <= -1)
-        {
-            enemy.transform.position = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-        }
-
+        // game over if score passes a certain point
         else if (score>=15)
         {
             GameOver();
             
         }
-
+        // spawns boss based on score
         if(score==6)
         {
             score++;
             StartCoroutine(spawnBoss());
         }
-        // if score is greater than number of enemies i.e they are dead all of them
-        // move into the next scene with scene manager
-        ///
 
+        // spawns upgrade ship
         if(score==3)
         {
             score++;
@@ -98,14 +100,8 @@ public class GameController : MonoBehaviour
 
        
     }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            Debug.Log("power Up Hit Player");
-        }
-    }
 
+    // instanciates powerup
         IEnumerator upgradeShip()
     {
         yield return new WaitForSeconds(2);
@@ -118,6 +114,7 @@ public class GameController : MonoBehaviour
         
 
     }
+    // instanciates boss
     IEnumerator spawnBoss()
     {
         yield return new WaitForSeconds(2);
@@ -129,6 +126,7 @@ public class GameController : MonoBehaviour
         }
 
     }
+    // spawns waves
     IEnumerator SpawnWaves()
     {
       
@@ -157,33 +155,35 @@ public class GameController : MonoBehaviour
     }
 
     
-
+    // adds and calls updateScore()
     public void AddScore(int newScoreValue)
     {
         score += newScoreValue;
         UpdateScore();
     }
-
+    // updates score text
     void UpdateScore()
     {
         scoreText.text = "Score: " + score;
     }
-
+    // lowers HP and calls UodatePlayerHPText()
     public void loseHP()
     {
         player.reduceHP();
         UpdatePlayerHPText();
     }
 
+    // updates player HP
     void UpdatePlayerHPText()
     {
         HPText.text = "HP: " + player.getHP();
     }
+    // updates player's lives
     void UpdateLives()
     {
         livesText.text = "Lives: " + player.playerLives;
     }
-
+    
     public void GameOver()
     {
         gameOverText.text = "Game Over!";
@@ -194,13 +194,15 @@ public class GameController : MonoBehaviour
         player.playerLives += newLiveValue;
         UpdateLives();
     }
-
+    // returns hp to base of every live
     public void resetHP()
     {
         player.returnHPToBase();
         UpdatePlayerHPText();
 
     }
+
+
 
     
 }

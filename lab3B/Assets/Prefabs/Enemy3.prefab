@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3138487049099878019}
   m_Layer: 0
   m_Name: Enemy3
-  m_TagString: Untagged
+  m_TagString: Enemy3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,10 +142,10 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618867621038997025}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 5.6
-  m_Height: 0.5
+  m_Radius: 1.5
+  m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1618867620449865416
@@ -160,9 +160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365dd2da98dd9431b8c5d7406c200eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shot: {fileID: 100000, guid: f4ec271e525e14ca9927a07e6a2e153d, type: 3}
+  shot: {fileID: 100000, guid: 11e27c26ac87b40f0a62ec40d7261989, type: 3}
   shotSpawn: {fileID: 3213310474270507954}
-  fireRate: 10
+  fireRate: 1
   delay: 0.5
 --- !u!114 &1618867620449865417
 MonoBehaviour:
@@ -215,7 +215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8564606295712290544}
   m_LocalRotation: {x: 0.000000115202326, y: 0.7071068, z: -0.7071068, w: -0.000000115202326}
-  m_LocalPosition: {x: 0, y: -20.500004, z: -9.999755}
+  m_LocalPosition: {x: 0, y: 0, z: -9.999755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1618867621039317635}

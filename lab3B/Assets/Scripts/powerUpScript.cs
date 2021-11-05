@@ -9,9 +9,11 @@ public class powerUpScript : MonoBehaviour
     public float speed;
     Vector3 movement;
     public Rigidbody rb;
+  
    
     void Start()
     {
+
         movement = new Vector3(0, 0, 0.02f);
     }
 
@@ -20,6 +22,5 @@ public class powerUpScript : MonoBehaviour
     {
         transform.position += movement * speed;
         rb.rotation = Quaternion.Euler(0.0f, .0f, 2.0f);
-       // Debug.Log(transform.position.y);
     }
 }

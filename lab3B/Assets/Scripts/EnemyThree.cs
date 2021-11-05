@@ -8,11 +8,9 @@ public class EnemyThree : MonoBehaviour
     public float speed = 0;
     private int randomDirection = 1;
     public float timeRemaining;
+    public int HP;
 
     private PlayerController playerController;
-
-   
-
  
 
     // Start is called before the first frame update
@@ -45,7 +43,7 @@ public class EnemyThree : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        // moves enemy along a random path
         if (randomDirection == 1)
         {
             rb.velocity = new Vector3(0, 0, transform.forward.z * -speed);
@@ -65,7 +63,7 @@ public class EnemyThree : MonoBehaviour
             rb.velocity = new Vector3(transform.right.x * -speed, 0, 0);
 
         }
-
+        // keeps enemy in border
         if (transform.position.z > 12)
         {
             randomDirection = 1;
@@ -83,6 +81,11 @@ public class EnemyThree : MonoBehaviour
             randomDirection = 4;
         }
 
+    }
+
+    public void loseHP()
+    {
+        HP--;
     }
 
    

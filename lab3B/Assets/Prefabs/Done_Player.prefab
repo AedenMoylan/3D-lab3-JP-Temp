@@ -9691,7 +9691,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -9706,7 +9706,7 @@ MeshCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 5282f20eba4d44213820e21af8481932, type: 3}
 --- !u!114 &11400000
@@ -9728,9 +9728,14 @@ MonoBehaviour:
     xMax: 0
     zMin: 0
     zMax: 0
+  powerUP: {fileID: 2081455405694767209, guid: e316ff1f1fa63f644ad8ac612163aff3, type: 3}
   shot: {fileID: 100000, guid: f4ec271e525e14ca9927a07e6a2e153d, type: 3}
   shotSpawn: {fileID: 400004}
   fireRate: 0.25
+  HP: 0
+  rend: {fileID: 0}
+  isLifeLost: 0
+  playerLives: 0
 --- !u!82 &8200000
 AudioSource:
   m_ObjectHideFlags: 0

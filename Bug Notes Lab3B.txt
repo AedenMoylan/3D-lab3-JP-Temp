@@ -1,0 +1,11 @@
+1) collisions between player and powerup do not work. Powerup collides with
+every other object except player for some reason.
+
+2) collisions between playerBullet and enemy3 do not work. enemy3 collides
+with other objects though for some reason
+
+3) enemy3 shoots bullets low on the y-axis and therefore can't hit the player
+
+4) enemy3 does not move on the z-axis.
+
+(PowerUp effect is added to the player by pressing space)

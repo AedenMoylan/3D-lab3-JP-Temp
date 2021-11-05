@@ -10,6 +10,7 @@ public class DestroyByContact : MonoBehaviour
     private GameController gameController;
     private PlayerController player;
     private EnemyController enemy;
+    private EnemyThree enemyThree;
 
     void Start()
     {
@@ -31,8 +32,12 @@ public class DestroyByContact : MonoBehaviour
         GameObject enemyObject = GameObject.FindWithTag("Enemy");
         enemy = GetComponent<EnemyController>();
 
-    }
 
+        GameObject enemy3Object = GameObject.FindWithTag("Enemy3");
+        enemyThree = GetComponent<EnemyThree>();
+
+    }
+    // handles collisions and function calls of the GameObjects
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "EnemyBullet")
@@ -43,7 +48,6 @@ public class DestroyByContact : MonoBehaviour
         {
             return;
         }
-        // Instantiate(explosion, transform.position, transform.rotation);
         if (other.tag == "Player")
         {
             
@@ -66,11 +70,10 @@ public class DestroyByContact : MonoBehaviour
                 gameController.GameOver();
                 Instantiate(playerExplosion, transform.position, transform.rotation);
             }
-
-            //gameController.GameOver();
         }
         if (other.tag == "PlayerBullet" )
         {
+            
             if (tag == "EnemyBullet")
             {
                 return;
@@ -97,14 +100,23 @@ public class DestroyByContact : MonoBehaviour
         {
             if (tag == "Player")
             {
-                Debug.Log("powerUp");
+                player.isPlayerPoweredUp = true;
+                Destroy(other.gameObject);
             }
             else
             {
                 return;
             }
-            //Destroy(gameObject);
 
+        }
+
+        if (other.tag == "Enemy3")
+        {
+            if (tag == "PlayerBullet")
+            {
+                enemyThree.loseHP();
+                Debug.Log("enemy 3 losing hp");
+            }
         }
 
 

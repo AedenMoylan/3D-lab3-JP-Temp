@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class Boundary 
 {
+	// used for boundary detection
 	public float xMin, xMax, zMin, zMax;
 }
 
@@ -29,9 +30,11 @@ public class PlayerController : MonoBehaviour
 	public bool isLifeLost;
 	int timerCount;
 	public int playerLives;
+	public bool isPlayerPoweredUp;
 
 	void Start()
     {
+		isPlayerPoweredUp = false;
 		timerCount = 0;
 		isPlayerVisible = true;
 		isLifeLost = false;
@@ -47,8 +50,14 @@ public class PlayerController : MonoBehaviour
 		{
 			flashPlayer();
 		}
+		// temporary. used to powerup player when space is pressed
+		if (Keyboard.current.spaceKey.wasPressedThisFrame)
+		{
+			isPlayerPoweredUp = true;
+		}
 	}
 
+	// sets rotation, velocity, and stops player from going out of bounds
 	void FixedUpdate()
 	{
 		Vector3 movement = new Vector3(movementX, 0.0f, 0.0f);// movementY);
@@ -65,17 +74,21 @@ public class PlayerController : MonoBehaviour
 		Vector2 movementVector = movementValue.Get<Vector2>();
 
 		movementX = movementVector.x;
-	//	movementY = movementVector.y;
 
 		
 	}
     
-
+	// instanciates and fires the bullet. If player has a powerup, player shoots 2 bullets at the same to make a stronger bullet
     void OnFire(InputValue movementValue)
     {
 		nextFire = Time.time + fireRate;
 		Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 		GetComponent<AudioSource>().Play();
+		if(isPlayerPoweredUp == true)
+        {
+			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+			GetComponent<AudioSource>().Play();
+		}
 	}
 
 	public void reduceHP()
@@ -92,7 +105,7 @@ public class PlayerController : MonoBehaviour
     {
 		HP = 2;
     }
-
+	// renders the player on and off to simulate flashing. also sets isLifeLost to false at the ens which ends invincibility
 	public void flashPlayer()
     {
 		count++;
@@ -110,7 +123,7 @@ public class PlayerController : MonoBehaviour
 			rend.enabled = isPlayerVisible;
 			count = 0;
 		}
-		if (timerCount >= 200)
+		if (timerCount >= 400)
         {
 			isLifeLost = false;
 			timerCount = 0;

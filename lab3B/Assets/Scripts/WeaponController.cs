@@ -7,15 +7,18 @@ public class WeaponController : MonoBehaviour
 	public Transform shotSpawn;
 	public float fireRate;
 	public float delay;
+	int randFire;
 
 	void Start ()
 	{
-		InvokeRepeating ("Fire", delay, fireRate);
+		randFire = Random.Range(1, 5);
+		InvokeRepeating ("Fire", delay, randFire);
 	}
 
 	void Fire ()
-	{
+	{		
 		Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 		GetComponent<AudioSource>().Play();
 	}
+
 }
